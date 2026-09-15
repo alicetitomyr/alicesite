@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Критерій 2: Метадані документа -->
+    <meta name="description" content="Сучасна UI-презентація технологій комп'ютерного зору та штучного інтелекту.">
+    <meta name="keywords" content="комп'ютерний зір, ШІ, нейромережі, vision, Apple style">
+    <meta name="author" content="Аріна">
+    
+    <title>LOMAN | Комп'ютерний Зір</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #f5f5f7;
+            --bg-card: #ffffff;
+            --text-dark: #111111;
+            --text-gray: #86868b;
+            --accent-black: #000000;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* --- НАВІГАЦІЯ --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 5vw;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; }
+        
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem; }
+        .nav-links a.active { position: relative; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--accent-black); border-radius: 50%; }
+
+        .btn-black {
+            background-color: var(--accent-black);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        .btn-black:hover { transform: translateY(-2px); }
+
+        /* --- СІТКА --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            padding: 0 5vw;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* --- HERO СЕКЦІЯ --- */
+        .hero {
+            min-height: 100vh;
+            padding-top: 15vh;
+            position: relative;
+        }
+
+        .bg-circle {
+            position: absolute;
+            right: 15%;
+            top: 10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.05);
+            z-index: -1;
+        }
+
+        .hero-text-col {
+            grid-column: 1 / 7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 6vw, 6rem);
+            font-weight: 800;
+            line-height: 1.05;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        h1 .outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--text-gray);
+            display: block;
+        }
+        h1 .solid { display: block; }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            max-width: 450px;
+            margin-bottom: 40px;
+        }
+
+        .hero-img-col {
+            grid-column: 7 / 13;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .hero-img-col img {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 400px;
+            object-fit: contain;
+        }
+
+        /* --- UI КАРТКИ --- */
+        .cards-section {
+            padding-top: 20px;
+            align-items: stretch;
+            gap: 30px;
+        }
+
+        .ui-card {
+            background-color: var(--bg-card);
+            border-radius: 32px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .text-card {
+            grid-column: 1 / 8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .text-card h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: -0.5px;
+        }
+
+        .text-card p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        dfn { font-style: normal; color: var(--text-dark); }
+        mark { background: #fef08a; padding: 0 4px; border-radius: 4px; }
+
+        .media-card {
+            grid-column: 8 / 13;
+            background: linear-gradient(135deg, #f0f0f5 0%, #e6e6ec 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .media-card img {
+          width: 90% !important; 
+           height: auto !important;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .media-card:hover img {
+            transform: rotate(0deg) scale(1.03);
+        }
+
+        /* --- ПЛАВАЮЧА ПАНЕЛЬ --- */
+        .bottom-bar {
+            grid-column: 1 / 13;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            border-radius: 28px;
+            padding: 25px 40px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 16px;
+            transition: background 0.3s;
+        }
+
+        .feature-item:hover { background: rgba(0,0,0,0.04); }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .feature-text { display: flex; flex-direction: column; }
+        .feature-text strong { font-size: 0.9rem; font-weight: 800; }
+        .feature-text span { font-size: 0.75rem; color: var(--text-gray); }
+
+        /* Група картинок-посилань */
+        .image-links-group {
+            display: flex;
+            gap: -15px; /* Картинки злегка перекривають одна одну */
+        }
+
+        .img-link-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, z-index 0.3s;
+            position: relative;
+            margin-left: -15px;
+        }
+        
+        .img-link-wrapper:first-child { margin-left: 0; }
+        
+        .img-link-wrapper:hover {
+            transform: scale(1.15) translateY(-5px);
+            z-index: 10;
+        }
+        
+        .img-link-wrapper img { width: 100% !important; height: 100% !important; object-fit: cover; }
+
+        @media (max-width: 1024px) {
+            .hero-text-col, .hero-img-col { grid-column: 1 / 13; text-align: center; align-items: center; }
+            .hero-img-col { margin-top: 40px; }
+            .text-card, .media-card, .bottom-bar { grid-column: 1 / 13; }
+            .bottom-bar { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">V//ISION.</div>
+        <nav class="nav-links">
+            <a href="#" class="active">Головна</a>
+            <a href="#details">Технології</a>
+            <a href="https://uk.wikipedia.org/wiki/Штучний_інтелект" target="_blank">Про ШІ</a>
+        </nav>
+        <a href="#details" class="btn-black">
+            Explore Now <span>↗</span>
+        </a>
+    </header>
+
+    <main>
+        <!-- БЛОК 1 -->
+        <section class="hero grid-container">
+            <div class="bg-circle"></div>
+                
+            <div class="hero-text-col">
+                <div class="tagline">Next Generation</div>
+                
+                <h1>
+                    <span class="solid">Комп'ютерний</span>
+                    <span class="solid">Зір.</span>
+                    <span class="outline">Майбутнє.</span>
+                </h1>
+
+                <div class="hero-desc">
+                    <p><strong><u><dfn>Комп’ютерний зір</dfn></u></strong> - це напрям у галузі штучного інтелекту, що займається розробкою <u>математичних алгоритмів</u> та програмних засобів для <i>автоматизованого аналізу, обробки й розуміння візуальних даних</i>.</p>
+                </div>
+
+                <a href="#details" class="btn-black" style="width: fit-content;">
+                    Discover More <span>↗</span>
+                </a>
+            </div>
+
+            <div class="hero-img-col">
+                <!-- Зображення 1: 100% (коренева папка) -->
+                <!-- Коментар 1: Зображення ai-robot.png повинно лежати поруч з файлом HTML -->
+                <img src="ai-robot.png" alt="Робот зі смарт-окулярами" width="100%" height="auto">
+            </div>
+        </section>
+
+        <!-- БЛОК 2 -->
+        <section id="details" class="grid-container cards-section">
+            
+            <div class="ui-card text-card">
+                <h2>Архітектура та вплив на світ</h2>
+                
+                <p><i><big>Основна мета цієї дисципліни</big></i> полягає у відтворенні складних функцій людської зорової системи, що дозволяє обчислювальним машинам <strong>самостійно</strong> розпізнавати об'єкти, визначати їхні просторові координати та <u><s>інтерпретувати динамічні сцени</s></u>. У сучасних прикладних системах розв'язання цих завдань базується на архітектурах глибоких нейронних мереж, зокрема <strong>згорткових (CNN) та трансформаторних (Vision Transformers)</strong> моделях, які навчаються на величезних масивах маркованих зображень.</p>
+                
+                <p><u>Завдяки високій точності розпізнавання,</u> <i><small>технології комп’ютерного зору стали фундаментальною основою для розвитку систем автономного водіння, автоматизованої медичної діагностики, інтелектуального відеоспостереження та робототехніки</small></i>. Таким чином, <big>дослідження у цій сфері</big> безпосередньо трансформують взаємодію між машиною та фізичним світом, забезпечуючи перехід від простої фіксації пікселів до глибокого семантичного аналізу відеопотоку.</p>
+            </div>
+
+            <div class="ui-card media-card">
+                <!-- Зображення 2: 50% (папка assets) -->
+                <!-- Коментар 2: Зображення 50% у створеній папці assets -->
+                <img src="assets/tech-chip.jpg" alt="Процесор ШІ" width="50%" height="auto">
+            </div>
+
+            <!-- БЛОК 3: Плаваюча панель із посиланнями -->
+            <div class="bottom-bar">
+                
+                <a href="https://uk.wikipedia.org/wiki/Комп%27ютерний_зір" target="_blank" class="feature-item">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-text">
+                        <strong>Вікіпедія</strong>
+                        <span>Стаття: Computer Vision</span>
+                    </div>
+                </a>
+
+                <a href="https://aws.amazon.com/ru/what-is/computer-vision/" target="_blank" class="feature-item">
+                    <div class="feature-icon">☁️</div>
+                    <div class="feature-text">
+                        <strong>Amazon AWS</strong>
+                        <span>Хмарні рішення ШІ</span>
+                    </div>
+                </a>
+
+                <!-- Коментар 3: Група з двох зображень по 20%, які завантажуються за посиланням і є активними елементами -->
+                <div class="image-links-group">
+                    <!-- Зображення 3: 20% (за посиланням) -->
+                    <a href="https://openai.com/" target="_blank" class="img-link-wrapper" title="Перейти на сайт OpenAI">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400&q=80" alt="Лінза камери" width="20%" height="auto">
+                    </a>
+                    
+                    <!-- Зображення 4: 20% (за посиланням) -->
+                    <a href="https://deepmind.google/" target="_blank" class="img-link-wrapper" title="Перейти на сайт Google DeepMind">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=400&q=80" alt="Абстракція ШІ" width="20%" height="auto">
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>
